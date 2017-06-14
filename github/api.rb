@@ -1,25 +1,25 @@
 # require_relative 'folder_setup.rb'
 # require_relative 'backup.rb'
 class GithubApi
+
   #create
   def create_online_repo(folder, account)
     `curl -u "#{account[:user]}:#{account[:pass]}" https://api.github.com/user/repos -d '{ "name": "#{folder.split('/')[-1]}" }' /dev/null`
   end
 
-# check
-  # still developing needs to be tested...
+  # check
   def check_user_exist(credentials, type, new_credentials = nil)
     response = `curl -i https://api.github.com -u #{credentials[:user]}:#{credentials[:pass]}`
     response = JSON.parse(response[response.index('{')..-1])
     response["message"]
   end
-  # END still developing.
+
   def check_online_repo(folder, account)
     response = `curl -i https://api.github.com/repos/#{account[:user]}/#{folder}`
     response = JSON.parse(response[response.index('{')..-1])
     response["message"].nil?
   end
-# end check
+  # end check
 
   #delete
   def delete_online_repo(folder, account) # When we have the program running, we will update this.
